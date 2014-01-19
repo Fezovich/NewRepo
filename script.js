@@ -4,18 +4,19 @@ var clickCount=0;
 
 
 $(document).ready(function() {
-   // var name = prompt("What is your name?");
-  //  $("#userName").html(name);
- 
+   var name = prompt("What is your name?");
+   $("#userName").html(name); 
    $("#info").on("click", "div", initialise); 
    $("#outer").on("click", "div", display);
 });
 
 function initialise(){
-    
+
+reset();
+
 $("#scoreValue").html(clickCount);  
-for(i =0;i<4; i++){                                   // verticle
-    for(k=0;k<4;k++){                                 // horizontal
+for(var i =0;i<4; i++){                                   // verticle
+    for(var k=0;k<4;k++){                                 // horizontal
         if(level1[i][k] === 1){                       // set up level 1
          toggleLights("#"+lightGrid[i][k]);
          toggleLights("#"+lightGrid[i][k]);
@@ -30,8 +31,10 @@ function display(){
     var lightNum = this.id;
     var id = "#"+lightNum;
     
-for(i =0;i<4; i++){                                   // verticle
-    for(k=0;k<4;k++){                                 // horizontal
+if($(id).hasClass('red')|| $(id).hasClass('yellow') ){
+    
+for(var i =0;i<4; i++){                                   // verticle
+    for(var k=0;k<4;k++){                                 // horizontal
         if(lightNum == lightGrid[i][k]){
             setLights(i,k);
        }
@@ -41,6 +44,7 @@ for(i =0;i<4; i++){                                   // verticle
  clickCount++;
  $("#scoreValue").html(clickCount);
  winCheck();
+}
 }
 
 function setLights(vert, horiz){
@@ -99,8 +103,8 @@ function winCheck(){
     
 var numYellow=0;
 
-for(i =0;i<4; i++){                                   // verticle
-    for(k=0;k<4;k++){                                 // horizontal
+for(var i =0;i<4; i++){                                   // verticle
+    for(var k=0;k<4;k++){                                 // horizontal
         if($("#"+lightGrid[i][k]).hasClass('yellow')){
             numYellow++;
        }
@@ -109,15 +113,17 @@ for(i =0;i<4; i++){                                   // verticle
 
 if(numYellow == 16){
     alert("You won in "+ clickCount +" moves!");
+    reset();
+}
+}
+
+function reset(){
+    
     clickCount= 0;
-    for(i =0;i<4; i++){                                   // verticle
-        for(k=0;k<4;k++){                                 // horizontal
+    for(var i =0;i<4; i++){                                   // verticle
+        for(var k=0;k<4;k++){                                 // horizontal
          $("#"+lightGrid[i][k]).removeClass('yellow');
          $("#"+lightGrid[i][k]).removeClass('red');
-        
         }
     }
-    
-}
-    
 }
